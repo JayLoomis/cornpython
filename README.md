@@ -64,8 +64,17 @@ your answers.
 1.  Work on your code locally.
 2.  Create a new branch for each project.
 3.  Submit a pull request when your code is ready.
-4.  Complete a code review, back and forth with me, until you're cleared to commit.
+4.  Complete a code review, back and forth with me, until you're cleared to
+    commit.
 5.  Commit to main branch.
+
+## Style ##
+
+Whenever possible, follow [PEP8](https://pep8.org/) style. That includes:
+
+-   Using `snake_case` for variable (including objects/class instances) and
+    function names.
+-   Using `CapWords` for class names.
 
 <!--     10        20        30        40        50        60        70        80
 ----\----|----\----|----\----|----\----|----\----|----\----|----\----|----\----|
