@@ -46,7 +46,7 @@ def verifyemail(e):
     tld_list = (".com",".org",".net",".int",".edu",".gov",".mil")
 
     #check for @ and .something
-    if "@" not in e:
+    if e.count("@") != 1:
         print("Error - no At Symbol")
     elif dotcom not in tld_list:
         print("not a dotcom")
