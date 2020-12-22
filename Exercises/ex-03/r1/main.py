@@ -33,7 +33,7 @@ def verifyphone(p):
 
     #for loop goes through their string and adds only the digits of goodnums to the output variable
     for num in startnum:
-        if num in goodnums:
+        if num.isdigit():
             outnum += num
         else:
             continue
