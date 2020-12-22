@@ -65,7 +65,7 @@ def verifyemail(e):
 
 def main():
     #working with a Sample Record:
-    test_record = dict(f_name="Jane", l_name="Doe", phone="(206) 346-1724", email="Jane@Doemail.com", contdate=datetime.datetime.today())
+    test_record = dict(f_name="Jane", l_name="Doe", phone="(206) 346-1724", email="Jane@Doemail.com", contdate=datetime.date.today())
 
     #defining options for this program
     #SEARCH is for looking up a contact - not complete in this module
@@ -98,7 +98,7 @@ def main():
                 l_name = input("\nType Last Name:\n")
                 phone = input("\nType Phone Number:\n")
                 email = input("\nType Email Address:\n")
-                l_contacted = {datetime.datetime.today(), "Contact Entered in DB"}
+                l_contacted = {datetime.date.today(), "Contact Entered in DB"}
 
                 #verify phone drops whatever format they have and replaces it, counts numbers
                 phone = verifyphone(phone)
