@@ -123,8 +123,9 @@ def main():
             print("\nEnter date of Conact")
             whencont = input("format: YYYY-M-D\n")
             notecont = input("\nAdd any notes about your contact\n")
-            print(f"You're entering {notecont} as happening on {whencont}")
+            print(f"\nYou're entering:\n{notecont}\nas happening on: {whencont}")
             print("Is this correct? Y/N")
+            
         elif manage == "EXIT":
             sys.exit("\nFINE, THEN YOU'RE FIRED!")
 
