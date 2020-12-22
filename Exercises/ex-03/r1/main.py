@@ -28,12 +28,10 @@ def verifyphone(p):
     startnum = p
     #initialize an empty string to catch the number we need.
     outnum = ""
-    #goodnums is a list of just the digits we want to accept.
-    goodnums = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
 
     #for loop goes through their string and adds only the digits of goodnums to the output variable
     for num in startnum:
-        if num in goodnums:
+        if num.isdigit():
             outnum += num
         else:
             continue
@@ -65,7 +63,7 @@ def verifyemail(e):
 
 def main():
     #working with a Sample Record:
-    test_record = dict(f_name="Jane", l_name="Doe", phone="(206) 346-1724", email="Jane@Doemail.com", contdate=datetime.datetime.today())
+    test_record = dict(f_name="Jane", l_name="Doe", phone="(206) 346-1724", email="Jane@Doemail.com", contdate=datetime.date.today())
 
     #defining options for this program
     #SEARCH is for looking up a contact - not complete in this module
@@ -98,7 +96,7 @@ def main():
                 l_name = input("\nType Last Name:\n")
                 phone = input("\nType Phone Number:\n")
                 email = input("\nType Email Address:\n")
-                l_contacted = {datetime.datetime.today(), "Contact Entered in DB"}
+                l_contacted = {datetime.date.today(), "Contact Entered in DB"}
 
                 #verify phone drops whatever format they have and replaces it, counts numbers
                 phone = verifyphone(phone)
