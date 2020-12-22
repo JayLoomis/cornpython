@@ -28,8 +28,6 @@ def verifyphone(p):
     startnum = p
     #initialize an empty string to catch the number we need.
     outnum = ""
-    #goodnums is a list of just the digits we want to accept.
-    goodnums = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
 
     #for loop goes through their string and adds only the digits of goodnums to the output variable
     for num in startnum:
