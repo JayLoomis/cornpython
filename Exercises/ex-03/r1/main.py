@@ -59,6 +59,43 @@ def verifyemail(e):
         #e = "Great"
     return e
 
+def verifydate(y,m,d)     # THIS DON'T WORK - NEED TO JUST DO ERRORS. DUH.
+    #swap year and day into digits
+    y = int(y)
+    d = int(d)
+    m = m.lower()
+
+    #check year
+    if y > datetime.datetime.year():
+        return "error year too big" 
+    #check day
+    elif d > 31 or d < 1:
+        return "error your day is wrong"
+    #check month
+    elif m == "jan" or "january" or "01" or "1":
+        m = 01
+    elif m == "feb" or "february" or "02" or "2":
+        m = 02
+    elif m == "mar" or "march" or "03" or "3":
+        m = 03
+    elif m == "apr" or "april" or "04" or "4":
+        m = 04
+    elif m == "may" or "05" or "5":
+        m = 05
+    elif m == "jun" or "june" or "06" or "6":
+        m = 06
+    elif m == "jul" or "july" or "07" or "7":
+        m = 07
+    elif m == "aug" or "august" or "08" or "8":
+        m = 08
+    elif m == "sep" or "sept" or "september" or "09" or "9":
+        m = 09
+    elif m == "oct" or "october" or "10":
+        m = 10
+    elif m == "nov" or "november" or "11":
+        m = 11
+    elif m == "dec" or "december" or "12":
+        m = 12
 
 
 def main():
@@ -87,6 +124,7 @@ def main():
     else:
         if manage == "SEARCH":
             search()
+
         elif manage == "NEW":
             accurate = False
             while accurate == False:
@@ -117,14 +155,46 @@ def main():
                 checkaccurate = checkaccurate.upper()
                 if checkaccurate == "Y":
                     accurate = True
+
         elif manage == "CONTACT":
-            print("\nEnter date of Conact")
-            whencont = input("format: YYYY-M-D\n")
-            notecont = input("\nAdd any notes about your contact\n")
-            print(f"\nYou're entering:\n{notecont}\nas happening on: {whencont}")
-            print("Is this correct? Y/N")
-            
+            accurate = False
+            while accurate == False:
+                # input the date of contact
+                print("\nDid you make this contact today?  Y/N")
+
+
+                inputtoday = input()
+                inputtoday = inputtoday.upper()
+                if inputtoday == "Y":
+                    contactdate = datetime.date.today()
+                else:
+                    datecheck = False
+                    while datecheck = False:
+                        contactdate = []
+                        contactdate.append(input("Year?\n"))
+                        contactdate.append(input("Month?\n"))
+                        contactdate.append(input("Day?\n"))
+
+                        #verifydate returns accurate date or specific error problems
+                        if type(verifydate(contactdate)) == datetime.date:
+                            contactdate = verifydate(contactdate)
+                            datecheck = True
+                        else:
+                            print(verifydate(contactdate))
+                            
+
+
+
+                contactnote = input("\nAdd any notes about your contact\n")
+                print(f"\nYou're entering:\n--> {contactnote}\nas happening on:  {contactdate}")
+                
+                #loop for option to re-input data
+                checkaccurate = input("\nIs this accurate? Y/N\n")
+                checkaccurate = checkaccurate.upper()
+                if checkaccurate == "Y":
+                    accurate = True
+                
         elif manage == "EXIT":
-            sys.exit("\nFINE, THEN YOU'RE FIRED!")
+            sys.exit("\nThank You")
 
 if __name__ == "__main__" : main()
