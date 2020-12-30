@@ -1,5 +1,5 @@
 #Skratch
-
+import random
 import datetime
 
 def effin():
