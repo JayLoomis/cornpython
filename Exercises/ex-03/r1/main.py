@@ -36,8 +36,9 @@ def verifyphone(p):
         else:
             continue
 
-    if len(outnum) > 10:
-        outnum = "Error:  Too many numbers."
+    if len(outnum) != 10:
+        #outnum = "Error:  Too many numbers."
+        raise TypeError('Incorrect number of digits for a phone number.')
     else:
         outnum = "({}) {}-{}".format(outnum[:3],outnum[3:6],outnum[6:])
 
@@ -59,48 +60,17 @@ def verifyemail(e):
         #e = "Great"
     return e
 
-def verifydate(y,m,d)     # THIS DON'T WORK - NEED TO JUST DO ERRORS. DUH.
+def verifydate(y,m,d):   
+    #THIS DON'T WORK - NEED TO JUST DO ERRORS. DUH. 
     #swap year and day into digits
     y = int(y)
     d = int(d)
     m = m.lower()
 
-    #check year
-    if y > datetime.datetime.year():
-        return "error year too big" 
-    #check day
-    elif d > 31 or d < 1:
-        return "error your day is wrong"
-    #check month
-    elif m == "jan" or "january" or "01" or "1":
-        m = 01
-    elif m == "feb" or "february" or "02" or "2":
-        m = 02
-    elif m == "mar" or "march" or "03" or "3":
-        m = 03
-    elif m == "apr" or "april" or "04" or "4":
-        m = 04
-    elif m == "may" or "05" or "5":
-        m = 05
-    elif m == "jun" or "june" or "06" or "6":
-        m = 06
-    elif m == "jul" or "july" or "07" or "7":
-        m = 07
-    elif m == "aug" or "august" or "08" or "8":
-        m = 08
-    elif m == "sep" or "sept" or "september" or "09" or "9":
-        m = 09
-    elif m == "oct" or "october" or "10":
-        m = 10
-    elif m == "nov" or "november" or "11":
-        m = 11
-    elif m == "dec" or "december" or "12":
-        m = 12
-
 
 def main():
     #working with a Sample Record:
-    test_record = dict(f_name="Jane", l_name="Doe", phone="(206) 346-1724", email="Jane@Doemail.com", contdate=datetime.date.today())
+    test_record = dict(f_name="Jane", l_name="Doe", phone="(206) 346-1724", email="Jane@Doemail.com", contactdate={datetime.date.today(), ""})
 
     #defining options for this program
     #SEARCH is for looking up a contact - not complete in this module
@@ -134,21 +104,25 @@ def main():
                 l_name = input("\nType Last Name:\n")
                 phone = input("\nType Phone Number:\n")
                 email = input("\nType Email Address:\n")
-                l_contacted = {datetime.date.today(), "Contact Entered in DB"}
+                startdate = {datetime.date.today(), "Contact Entered in DB"}
 
                 #verify phone drops whatever format they have and replaces it, counts numbers
-                phone = verifyphone(phone)
+                try:
+                    phone = verifyphone(phone)
+                except TypeError as e:
+                    print(f'{e}')
 
                 #verify TLD and that there is an @ symbol.
                 #currently no verification for multiple @ symbols.
                 email = verifyemail(email)
 
-                a_record = dict(f_name=f_name, l_name=l_name, phone=phone, email=email, l_contacted=l_contacted)
+                a_record = dict(f_name=f_name, l_name=l_name, phone=phone, email=email, startdate=startdate)
                 
                 #print a verification of the Dictionary values:
                 print("\nYour new employee data is:")
-                for data in a_record.values():
-                    print(data)
+                print(a_record["f_name"], " ", a_record["l_name"])
+                print("Phone #:  ", a_record["phone"])
+                print("Email is:  ", a_record["email"])
 
                 #loop for option to re-input data
                 checkaccurate = input("\nIs this accurate? Y/N\n")
@@ -169,7 +143,7 @@ def main():
                     contactdate = datetime.date.today()
                 else:
                     datecheck = False
-                    while datecheck = False:
+                    while datecheck == False:
                         contactdate = []
                         contactdate.append(input("Year?\n"))
                         contactdate.append(input("Month?\n"))
