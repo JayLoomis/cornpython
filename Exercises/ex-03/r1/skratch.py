@@ -2,25 +2,13 @@
 import random
 import datetime
 
-def verifyphone(p):
-    #initialize starting input:  p
-    startnum = p
-    #initialize an empty string to catch the number we need.
-    outnum = ""
+def verifyday(d):
+    if d.isdigit() > 31:
+        raise ValueError("Day number is too high.")
+    elif d.isdigit() < 1:
+        raise ValueError("Day must be between 1 and 31.")
 
-    #for loop goes through their string and adds only the digits of goodnums to the output variable
-    for digit in startnum:
-        if digit.isdigit():
-            outnum += digit
-        else:
-            continue
-
-    if len(outnum) != 10:
-        raise ValueError("Incorrect number of digits for a phone number.")
-    else:
-        outnum = "({}) {}-{}".format(outnum[:3],outnum[3:6],outnum[6:])
-
-    return outnum
+    return d
 
 def verifymonth(m):   
     # 
@@ -39,7 +27,7 @@ def verifymonth(m):
 def verifyyear(y):   
     # 
     if y > datetime.date.year():
-        raise ValueError("Date is in the future")
+        raise ValueError("Date cannot be in the future.")
     else:
         # returns the year
         return y
@@ -67,7 +55,7 @@ def main():
                 while inputting:
                     m = input("Month?\n")
                     try:
-                        # verify month takes in and formats a str
+                        # verify month takes in a STR and returns a format code
                         monthformat = verifymonth(m)
                     except ValueError as e:
                         badmonth = e
