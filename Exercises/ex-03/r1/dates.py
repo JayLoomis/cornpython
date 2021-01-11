@@ -2,7 +2,7 @@
 import random
 import datetime
 
-def verifyday(d):
+def get_valid_day(d):
     if d.isdigit() == False:
         raise ValueError("Please enter a numeral")
     elif int(d) > 31:
@@ -12,21 +12,26 @@ def verifyday(d):
 
     return d
 
-def verifymonth(m):   
-    # 
+def get_valid_month(m):
+    smallmonths = ("jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec")
+    bigmonths = ("january","february","march","april","may","june","july","august","september","october","november","december")
     if m.isdigit():
-        dateformat = "%m"
-    elif len(m) == 3:
-        dateformat = "%b"
-    elif len(m) > 3:
-        dateformat = "%B"
+        m = int(m)
+        if m < 0 or m > 13:
+            raise ValueError("Month out of Range")
+        else:
+            return str(m)
+    elif m.lower() in smallmonths:
+        m = smallmonths.index(m.lower()) + 1
+        return str(m)
+    elif m.lower() in bigmonths:
+        m = bigmonths.index(m) + 1
+        return str(m)
     else:
-        raise ValueError("Month not recognized.")
-    # returns the month as an strftime format
-    # https://strftime.org/
-    return dateformat
+        raise ValueError("Month not recognized")
 
-def verifyyear(y):   
+
+def get_valid_year(y):   
     # 
     if int(y) > datetime.datetime.today().year:
         raise ValueError("Date cannot be in the future.")
@@ -53,7 +58,7 @@ def main():
                 d = input("Day?\n")
                 try:
                     #verifies day is between 1 and 31
-                    d = verifyday(d)
+                    d = get_valid_day(d)
                 except ValueError as e:
                     baddate = e
                 if baddate == None:
@@ -68,12 +73,12 @@ def main():
             while inputting:
                 m = input("Month?\n")
                 try:
-                    # verify month takes in a STR and returns a format code
-                    monthformat = verifymonth(m)
+                    # verify month takes in a STR and returns a tuple
+                    # first is the 
+                    get_valid_month(m)
                 except ValueError as e:
                     baddate = e
                 if baddate == None:
-                    print(monthformat)
                     inputting = False
                 else:
                     print(baddate)
@@ -85,7 +90,7 @@ def main():
             while inputting:
                 y = input("Year?\n")
                 try:
-                    y = verifyyear(y)
+                    y = get_valid_year(y)
                 except ValueError as e:
                     baddate = e
                 if baddate == None:
@@ -96,7 +101,7 @@ def main():
                     continue
 
         # just here to show that the input is working.
-        print(d, monthformat, y)
+
         # build the date as a datetime object
         # https://stackoverflow.com/questions/466345/converting-string-into-datetime
         
