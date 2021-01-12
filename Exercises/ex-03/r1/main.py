@@ -164,11 +164,11 @@ def main():
                 startdate = {datetime.date.today(), "Contact Entered in DB"}
 
                 # sample fake record!
-                a_record = {"f_name" : "f_name",
-                            "l_name" : "l_name",
-                            "phone" : "phone",
-                            "email" : "email",
-                            "startdate" : "startdate"}
+                a_record = {"f_name" : f_name,
+                            "l_name" : l_name,
+                            "phone" : phone,
+                            "email" : email,
+                            "startdate" : startdate}
                 
                 #print a verification of the Dictionary values:
                 print("\nYour new employee data is:")
