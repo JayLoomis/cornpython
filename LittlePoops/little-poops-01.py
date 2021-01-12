@@ -7,26 +7,29 @@ def threepower(x,p):
     p = int(p)
     if x ** 3 == p:
         return True
-    elif x ** 3 > p:
+    elif x >= p:
         return False
     elif x ** 3 < p:
         x += 1
-        threepower(x,p)
+        return threepower(x,p)
 
 
 def main():
-    p = input("Gimme a number:\n")
     trying = True
     while trying:
+        p = input("Gimme a number:\n")
         if p.isdigit():
-            trying = False
             if threepower(1,p) == True:
-                print("yeah that worked.")
+                print(f"{p} is a power of 3.")
+                continue
             else:
-                print("Nope.")
-
-        else:
+                print("Nope.  Try again?")
+                continue
+        elif p == "Done" or "done":
+            trying = False
+        elif p.isdigit() == False:
             print("I said a number.\nTry Again:\n")
             continue
+
 
 if __name__ == "__main__" : main()
