@@ -71,7 +71,7 @@ def verifydate(d,m,y):
         raise ValueError("The date you entered is invalid.")
 
     if outdate.year > datetime.date.today().year:
-        raise ValueError("Connections must be this year or earlier")
+        raise ValueError("Connections must be this year or earlier.")
 
     return outdate
 
@@ -86,7 +86,7 @@ def main():
                    "l_name" : "Doe",
                    "phone" : "(206) 346-1724",
                    "email" : "Jane@Doemail.com",
-                   "contactdate" : {datetime.date.today():""}}
+                   "contactdate" : {datetime.date.today().strftime("%Y%m%d"):""}}
 
     # defining options for this program
     # SEARCH is for looking up a contact - not complete in this module
@@ -203,6 +203,7 @@ def main():
                             newcontactdate = verifydate(d,m,y)
                         except ValueError as e:
                             feedbackerror = e
+                            # newcontactdate = newcontactdate.strftime()
 
                         # if there are no errors, exit loop
                         if feedbackerror == None:
