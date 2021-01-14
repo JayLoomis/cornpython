@@ -21,99 +21,82 @@ import datetime
 
 def search():
     print("SEARCH is not available at this time.\n\n")
-    main()
 
 def verifyphone(p):
-    #initialize starting input:  p
+    # initialize starting input:  p
     startnum = p
-    #initialize an empty string to catch the number we need.
+    # initialize an empty string to catch the number we need.
     outnum = ""
 
-    #for loop goes through their string and adds only the digits of goodnums to the output variable
-    for num in startnum:
-        if num.isdigit():
-            outnum += num
+    # for loop goes through their string and adds only the digits of goodnums to the output variable
+    for digit in startnum:
+        if digit.isdigit():
+            outnum += digit
         else:
             continue
-
-    if len(outnum) > 10:
-        outnum = "Error:  Too many numbers."
+    # check to make sure the phone number is 10 digits long
+    if len(outnum) != 10:
+        raise ValueError("Incorrect number of digits for a phone number.")
     else:
         outnum = "({}) {}-{}".format(outnum[:3],outnum[3:6],outnum[6:])
-
+    # returns outnum as string
     return outnum
 
 def verifyemail(e):
-    #slice off the last four letters
+    # slice off the last four letters
     dotcom = e[-4::1]
     
-    #list of Top Level Domains that don't suck
+    # list of Top Level Domains that we accept
     tld_list = (".com",".org",".net",".int",".edu",".gov",".mil")
 
-    #check for @ and .something
+    # check for only 1 @ and valid .tld
     if e.count("@") != 1:
-        print("Error - no At Symbol")
+        raise ValueError("Must have ONE @ symbol")
     elif dotcom not in tld_list:
-        print("not a dotcom")
-    #else:
-        #e = "Great"
+        raise ValueError("Your TLD is nor recognized")
+    # returns e as a str
     return e
 
-def verifydate(y,m,d)     # THIS DON'T WORK - NEED TO JUST DO ERRORS. DUH.
+def verifydate(d,m,y):   
     #swap year and day into digits
-    y = int(y)
     d = int(d)
-    m = m.lower()
+    m = int(m)
+    y = int(y)
+    
+    # outdate = datetime.date(year=y, month=m, day=d)
 
-    #check year
-    if y > datetime.datetime.year():
-        return "error year too big" 
-    #check day
-    elif d > 31 or d < 1:
-        return "error your day is wrong"
-    #check month
-    elif m == "jan" or "january" or "01" or "1":
-        m = 01
-    elif m == "feb" or "february" or "02" or "2":
-        m = 02
-    elif m == "mar" or "march" or "03" or "3":
-        m = 03
-    elif m == "apr" or "april" or "04" or "4":
-        m = 04
-    elif m == "may" or "05" or "5":
-        m = 05
-    elif m == "jun" or "june" or "06" or "6":
-        m = 06
-    elif m == "jul" or "july" or "07" or "7":
-        m = 07
-    elif m == "aug" or "august" or "08" or "8":
-        m = 08
-    elif m == "sep" or "sept" or "september" or "09" or "9":
-        m = 09
-    elif m == "oct" or "october" or "10":
-        m = 10
-    elif m == "nov" or "november" or "11":
-        m = 11
-    elif m == "dec" or "december" or "12":
-        m = 12
+    try:
+        outdate = datetime.date(year=y, month=m, day=d)
+    except ValueError as e:
+        raise ValueError("The date you entered is invalid.")
 
+    if outdate.year > datetime.date.today().year:
+        raise ValueError("Connections must be this year or earlier")
+
+    return outdate
 
 def main():
-    #working with a Sample Record:
-    test_record = dict(f_name="Jane", l_name="Doe", phone="(206) 346-1724", email="Jane@Doemail.com", contdate=datetime.date.today())
+    # working with a Sample Record:
+    test_record = dict(f_name="Jane", l_name="Doe", 
+        phone="(206) 346-1724", email="Jane@Doemail.com", 
+        contactdate={datetime.date.today(), ""})
 
-    #defining options for this program
-    #SEARCH is for looking up a contact - not complete in this module
-    #NEW is for adding a new contact
-    options = ("SEARCH", "NEW", "CONTACT", "EXIT")
+    # defining options for this program
+    # SEARCH is for looking up a contact - not complete in this module
+    # NEW is for adding a new contact
+    options = ("SEARCH", "NEW", "CONNECTION", "EXIT")
     
-    #input what you want to do (in this case NEW to add a contact)
-    #keyword for what you're doing is "managing"
-    print("Type NEW to add a client")
-    print("Type CONTACT to record contact with a client")
+    #setting up some errors
+    phoneerror = None
+    emailerror = None
+
+    # input what you want to do (in this case NEW to add a contact)
+    # keyword for what you're doing is "managing"
+    print("Type NEW to add a new Contact")
+    print("Type CONNECTION to record time with a Contact")
     manage = input("---Type an Option:---\n")
 
-    #convert manage variable to all caps:
+    # convert manage variable to all caps:
     manage = manage.upper()
 
     while manage not in options:
@@ -126,74 +109,111 @@ def main():
             search()
 
         elif manage == "NEW":
-            accurate = False
-            while accurate == False:
-                #input the employee info
+            # initialize inputting contact info
+            # "verified" means the user has seen their input and verified its accuracy
+            verified = False
+            while verified == False:
+                # input the employee First name, Last Name
                 print("Enter the employee's personal data:")
                 f_name = input("\nType First Name:\n")
                 l_name = input("\nType Last Name:\n")
-                phone = input("\nType Phone Number:\n")
-                email = input("\nType Email Address:\n")
-                l_contacted = {datetime.date.today(), "Contact Entered in DB"}
 
-                #verify phone drops whatever format they have and replaces it, counts numbers
-                phone = verifyphone(phone)
+                # inputting employee phone info
+                inputting = True
+                while inputting:
+                    phone = input("\nType Phone Number:\n")
+                    # verifyphone() drops whatever format they have and replaces it, counts numbers
+                    try:
+                        # If verifyphone() generates an error it is stored in phoneerror
+                        phone = verifyphone(phone)
+                    except ValueError as e:
+                        phoneerror = e
+                    # if checks there are no errors, exit loop
+                    if phoneerror == None:
+                        inputting = False
+                    else:
+                        print(phoneerror)
+                        phoneerror = None
+                        continue
 
-                #verify TLD and that there is an @ symbol.
-                #currently no verification for multiple @ symbols.
-                email = verifyemail(email)
+                inputting = True
+                while inputting:
+                    email = input("\nType Email Address:\n")
+                    # verifyemail() checks for 1 @ and a set of acceptable TLD options
+                    try:
+                        email = verifyemail(email)
+                    except ValueError as e:
+                        emailerror = e
 
-                a_record = dict(f_name=f_name, l_name=l_name, phone=phone, email=email, l_contacted=l_contacted)
+                    # if there are no errors, exit loop
+                    if emailerror == None:
+                        inputting = False
+                    else:
+                        print(emailerror)
+                        emailerror = None
+                        continue
+
+                # This only captures when the record is initialized
+                startdate = {datetime.date.today(), "Contact Entered in DB"}
+
+                # sample fake record!
+                a_record = dict(f_name=f_name, l_name=l_name, phone=phone, email=email, startdate=startdate)
                 
                 #print a verification of the Dictionary values:
                 print("\nYour new employee data is:")
-                for data in a_record.values():
-                    print(data)
+                print(a_record["f_name"], " ", a_record["l_name"])
+                print("Phone #:  ", a_record["phone"])
+                print("Email is:  ", a_record["email"])
 
-                #loop for option to re-input data
+                #loop for option to re-input data / Verify Accuracy
                 checkaccurate = input("\nIs this accurate? Y/N\n")
                 checkaccurate = checkaccurate.upper()
                 if checkaccurate == "Y":
-                    accurate = True
+                    verified = True
 
-        elif manage == "CONTACT":
-            accurate = False
-            while accurate == False:
-                # input the date of contact
+        elif manage == "CONNECTION" or "CX":
+            verified = False
+            while verified == False:
+                # input the date of encounter with Contact
                 print("\nDid you make this contact today?  Y/N")
-
-
                 inputtoday = input()
                 inputtoday = inputtoday.upper()
                 if inputtoday == "Y":
-                    contactdate = datetime.date.today()
+                    inputconnection = datetime.date.today()
                 else:
-                    datecheck = False
-                    while datecheck = False:
-                        contactdate = []
-                        contactdate.append(input("Year?\n"))
-                        contactdate.append(input("Month?\n"))
-                        contactdate.append(input("Day?\n"))
-
+                    datechecked = False
+                    while datechecked == False:
+                        d = (input("Day?\nMust be two digits\n"))
+                        m = (input("Month?\nMust be two digits\n"))
+                        y = (input("Year?\n"))
                         #verifydate returns accurate date or specific error problems
-                        if type(verifydate(contactdate)) == datetime.date:
-                            contactdate = verifydate(contactdate)
-                            datecheck = True
+                        feedbackerror = None
+                        try:
+                            inputconnection = verifydate(d,m,y)
+                        except ValueError as e:
+                            feedbackerror = e
+
+                        # if there are no errors, exit loop
+                        if feedbackerror == None:
+                            datechecked = True
                         else:
-                            print(verifydate(contactdate))
-                            
-
-
-
+                            print(feedbackerror)
+                            feedbackerror = None
+                            continue
+                # ask them for any notes about the connection
                 contactnote = input("\nAdd any notes about your contact\n")
-                print(f"\nYou're entering:\n--> {contactnote}\nas happening on:  {contactdate}")
-                
-                #loop for option to re-input data
+                # show it to them so they can verify it
+                print(f"\nYou're entering:\n--> {contactnote}\nas happening on:  {inputconnection}")
+                # loop for option to re-input data
                 checkaccurate = input("\nIs this accurate? Y/N\n")
                 checkaccurate = checkaccurate.upper()
                 if checkaccurate == "Y":
-                    accurate = True
+                    verified = True
                 
+                # append the new connection to test_record
+                test_record.contactdate.update(dict(inputconnection=contactnote))
+                print(test_record)
+
         elif manage == "EXIT":
             sys.exit("\nThank You")
 
