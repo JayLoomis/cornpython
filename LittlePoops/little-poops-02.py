@@ -3,3 +3,4 @@
 
 # Because anagrams are often multiple words, remove all non-printing 
 # characters from both params before you do your check.
+
