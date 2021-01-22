@@ -80,114 +80,98 @@ class Client:
     def __init__(self, f_name,l_name,phone,email,connection):
         self.f_name = f_name
         self.l_name = l_name
-        self.phone = set_phone(phone)
-        self.email = set_email(email)
+        self.phone = self.set_phone(phone)
+        self.email = self.set_email(email)
         self.connection = connection
-        self.key = uuid.uuid1()
+        # self.key = uuid.uuid1()
 
 class Database:
-    def new_client()
+    def __init__(self):
+        self.verified = False
+        import datetime
+        import sys
+    
+    #def new_client():
     # initialize inputting contact info
     # "verified" means the user has seen their input and verified its accuracy
-    verified = False
-    while verified == False:
-        # input the employee First name, Last Name
-        print("Enter the employee's personal data:")
-        f_name = input("\nType First Name:\n")
-        l_name = input("\nType Last Name:\n")
-
-        # inputting employee phone info
-        inputting = True
-        while inputting:
+        while self.verified == False:
+            # input the employee First name, Last Name
+            print("Enter the employee's personal data:")
+            f_name = input("\nType First Name:\n")
+            l_name = input("\nType Last Name:\n")
             phone = input("\nType Phone Number:\n")
-            # verifyphone() drops whatever format they have and replaces it, counts numbers
-            try:
-                # If verifyphone() generates an error it is stored in phoneerror
-                phone = verifyphone(phone)
-            except ValueError as e:
-                phoneerror = e
-            # if checks there are no errors, exit loop
-            if phoneerror == None:
-                inputting = False
-            else:
-                print(phoneerror)
-                phoneerror = None
-                continue
-
-        inputting = True
-        while inputting:
             email = input("\nType Email Address:\n")
-            # verifyemail() checks for 1 @ and a set of acceptable TLD options
-            try:
-                email = verifyemail(email)
-            except ValueError as e:
-                emailerror = e
+            startdate = (datetime.date.today(), "Contact Entered in DB")
+            
+            inputting = True
+            inputerror = None
+            while inputting:
+                try:
+                    new_client = Client(f_name,l_name,phone,email,startdate)
+                except ValueError as e:
+                    inputerror = e
 
-            # if there are no errors, exit loop
-            if emailerror == None:
-                inputting = False
+                # if there are no errors, exit loop
+                if inputerror == None:
+                    inputting = False
+                else:
+                    print(inputerror)
+                    inputerror = None
+                    continue
+
+            #print a verification of the Dictionary values:
+            print("\nYour new employee data is:")
+            print(f_name, " ", l_name)
+            print("Phone #:  ", phone)
+            print("Email is:  ", email)
+
+            #loop for option to re-input data / Verify Accuracy
+            checkaccurate = input("\nIs this accurate? Y/N\n")
+            checkaccurate = checkaccurate.upper()
+            if checkaccurate == "Y":
+                verified = True
             else:
-                print(emailerror)
-                emailerror = None
                 continue
-
-        # This only captures when the record is initialized
-        startdate = {datetime.date.today(), "Contact Entered in DB"}
-
-        # sample fake record!
-        a_record = {"f_name" : f_name,
-                    "l_name" : l_name,
-                    "phone" : phone,
-                    "email" : email,
-                    "startdate" : startdate}
-        
-        #print a verification of the Dictionary values:
-        print("\nYour new employee data is:")
-        print(a_record["f_name"], " ", a_record["l_name"])
-        print("Phone #:  ", a_record["phone"])
-        print("Email is:  ", a_record["email"])
-
-        #loop for option to re-input data / Verify Accuracy
-        checkaccurate = input("\nIs this accurate? Y/N\n")
-        checkaccurate = checkaccurate.upper()
-        if checkaccurate == "Y":
-            verified = True
+        return new_client
 
 class Interface:
-    options = ("SEARCH", "S", "NEW", "N", "CONNECTION", "C", "EXIT", "E")
-    
-    #setting up some errors
-    phoneerror = None
-    emailerror = None
+    def __init__(self):
+        # input what you want to do from the Options list:
+        self.options = ("SEARCH", "S", "NEW", "N", "CONNECTION", "C", "EXIT", "E")
 
-    # input what you want to do (in this case NEW to add a contact)
-    # keyword for what you're doing is "managing"
-    print("Type NEW to add a new Contact")
-    print("Type CONNECTION to record time with a Contact")
-    manage = input("---Type an Option:---\n")
+    def start(self):
 
-    # convert manage variable to all caps:
-    manage = manage.upper()
-
-    while manage not in options:
-        print("\nError - option not found - please type again.")
+        # keyword for what you're doing is "managing"
+        print("*** Welcome to Client Manager ***\n\n")
+        print("Youre options include:\n")
+        print("Type NEW to add a new Contact")
+        print("Type CONNECTION to record time with a Contact")
         manage = input("---Type an Option:---\n")
-        #convert manage variable to all caps:
+
+        # convert manage variable to all caps:
         manage = manage.upper()
-    else:
-        if manage == "SEARCH":
-            searchword = input("\nEnter a Searchword:\n")
 
-        elif manage == "NEW":
-            database.new()
+        while manage not in self.options:
+            print("\nError - option not found - please type again.")
+            manage = input("---Type an Option:---\n")
+            #convert manage variable to all caps:
+            manage = manage.upper()
+        else:
+            if manage == "SEARCH":
+                searchword = input("\nEnter a Searchword:\n")
 
-        elif manage == "CONNECTION" or "CX":
-            database.connection()
+            elif manage == "NEW" or "N":
+                new_client = Database()
+                print(new_client)
+                manage = "EXIT"
+            # elif manage == "CONNECTION" or "CX":
+                
 
-        elif manage == "EXIT":
-            sys.exit("\nThank You")
+            elif manage == "EXIT":
+                sys.exit("\nThank You")
 
 def main():
-
+    ui = Interface()
+    ui.start()
 
 if __name__ == "__main__" : main()
