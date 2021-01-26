@@ -54,6 +54,7 @@ class Anagrammer:
 
     def find_anagram(self, word):
         self.word
+        
 
     def list_anagrams(self, word):
         self.word
