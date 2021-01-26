@@ -37,7 +37,7 @@ class Anagrammer:
 
     def __init__(self, dict_file):
         self._dict_file = open(dict_file)
-        self.dictionary = self._dict_file.read()
+        self.dictionary = self._dict_file.readlines()
         
 
     @staticmethod
