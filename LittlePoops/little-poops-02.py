@@ -36,7 +36,9 @@ import sys
 class Anagrammer:
 
     def __init__(self, dict_file):
-        self.dictionary = open(dict_file, "r")
+        self._dict_file = open(dict_file)
+        self.dictionary = self._dict_file.read()
+        
 
     @staticmethod
     def is_anagram(word,anagram):
@@ -52,46 +54,41 @@ class Anagrammer:
         else:
             return False
 
-    def find_anagram(self, word):
-        self.word
-        line = readline(
+    # def find_anagram(self, word):
+    #     self.word
+
+    #     for entry in self._dictionary:
+
 
     def list_anagrams(self, word):
         self.word
+        self._results = []
+        for entry in self._dictionary:
+            # check = entry.rstrip()
+            if is_anagram(entry, self.word):
+                _results.append(entry)
+            else:
+                continue
+        if self._results == []:
+            return self.word
+        else:
+            return self._results
+
 
 class Interface:
 
-    def __init__(self):
-        # self.dict_file = dictionary.txt
+    #def __init__(self):
+        #self.dict_file = dictionary.txt
 
-    @staticmethod
-    def start():
-        print("Choose Seuess or Tolkien\n")
-        file = input("Type S or T")
-        file = file.upper()
-        if file == "T":
-            file = "cormallen.txt"
-        elif file == "S":
-            file = "cathat.txt"
+    def start(self):
+        self.source_dict = "dictionary.txt"
+        anagrams = Anagrammer(self.source_dict)
 
-        Anagrammer(file)
+        print("enter a word:\n")
+        word = input()
+        anagrams.list_anagrams(word)
 
-        word = input("Please tell me a word to search:\n")
 
-        result = find_anagram(word)
-        if result == word:
-            print("there are no Anagrams of that word.")
-        else:
-            print("Here is one random anagram for your word:\n")
-            one_anagram = Anagrammer.is_anagram(word)
-        print("\n\nWould you like to see all the anagrams?")
-        extra = input("Type Y / N")
-        extra.upper()
-        if extra == "Y":
-            for i in result:
-                print(result[i])
-        else:
-            sys.exit("\nThank You")
 
 
 
