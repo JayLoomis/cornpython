@@ -40,9 +40,22 @@ class Anagrammer:
 
     @staticmethod
     def is_anagram(word,anagram):
-        
+        word = lower(word)
+        wordsorted = sorted(word)
+        wordsorted = "".join(wordsorted)
+        anagram = lower(anagram)
+        anagramsorted = sorted(anagram)
+        anagramsorted = "".join(anagramsorted)
+
+        if wordsorted == anagramsorted:
+            return True
+        else:
+            return False
 
     def find_anagram(self, word):
+        self.word
+
+    def list_anagrams(self, word):
         self.word
 
 class Interface:
