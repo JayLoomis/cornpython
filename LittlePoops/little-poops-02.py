@@ -54,7 +54,7 @@ class Anagrammer:
 
     def find_anagram(self, word):
         self.word
-        
+        line = readline(
 
     def list_anagrams(self, word):
         self.word
@@ -62,9 +62,9 @@ class Anagrammer:
 class Interface:
 
     def __init__(self):
-        self.dict_file
-        self.word
+        # self.dict_file = dictionary.txt
 
+    @staticmethod
     def start():
         print("Choose Seuess or Tolkien\n")
         file = input("Type S or T")
