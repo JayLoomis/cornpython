@@ -1,22 +1,19 @@
-class Database:
-    def __init__(self):
-        import datetime
-        import sys
+import datetime
+import sys
+import database
 
 class Interface:
 
     def __init__(self):
-        import datetime
-        import sys
         # input what you want to do from the Options list:
         self.options = ("NEW", "N", "CONNECTION", "C", "EXIT", "E")
 
     def start(self):
         """
-        Intialize Client Manager interface.  Show the user what options they have.
+        Intialize Client Tracker interface.  Show the user what options they have.
         """
         # keyword for what you're doing is "managing"
-        print("*** Welcome to Client Manager ***\n\n")
+        print("*** Welcome to Client Tracker ***\n\n")
         print("Youre options include:\n")
         print("Type NEW to add a new Contact")
         print("Type CONNECTION to record time with a Contact")
@@ -24,15 +21,15 @@ class Interface:
         """
         Program runs on While loop until Exit is chosen by user.  Loop restarts if an option not listed in self.options built in constructor.
         """
-        # convert manage variable to all caps:
+        # convert optionpick variable to all caps:
         optionpick = optionpick.upper()
         executing = True
         while executing == True:
             if optionpick not in self.options:
                 print("\nError - option not found - please type again.")
-                manage = input("---Type an Option:---\n")
-                #convert manage variable to all caps:
-                manage = manage.upper()
+                optionpick = input("---Type an Option:---\n")
+                #convert optionpick variable to all caps:
+                optionpick = optionpick.upper()
                 continue
             elif optionpick == "NEW" or "N":
                 """
@@ -54,11 +51,10 @@ class Interface:
                         phone = input("\nType Phone Number:\n")
                         email = input("\nType Email Address:\n")
                         startdate = [datetime.date.today(), "Contact Entered in DB"]
-                        try:
-                            new_client = Client(f_name,l_name,phone,email,startdate)
-                        except ValueError as e:
-                            inputerror = e
-
+                        
+                        # capture errors from database or None
+                        inputerror = database.Database.new_obj_check(f_name,l_name,phone,email,startdate)
+                        
                         # if there are no errors, exit loop
                         if inputerror == None:
                             inputting = False
@@ -81,9 +77,9 @@ class Interface:
                         verified = True
                     else:
                         continue
-                # Database.enter(new_client)
+                # Database.enter(new_client_check)
 
-            elif manage == "CONNECTION" or "CX":
+            elif optionpick == "CONNECTION" or "CX":
                 verified = False
                 while verified == False:
                     # input the date of encounter with Contact
@@ -127,5 +123,5 @@ class Interface:
                     test_record["contactdate"][newcontactdate]=newcontactnote
                     print(test_record)
 
-            elif manage == "EXIT":
+            elif optionpick == "EXIT":
                 sys.exit("\nThank You")
