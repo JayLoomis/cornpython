@@ -47,14 +47,19 @@ class Interface:
                         # input the employee First name, Last Name
                         print("Enter the employee's personal data:")
                         f_name = input("\nType First Name:\n")
+                        f_name = f_name.capitalize()
                         l_name = input("\nType Last Name:\n")
+                        l_name = l_name.capitalize()
                         phone = input("\nType Phone Number:\n")
                         email = input("\nType Email Address:\n")
                         startdate = [datetime.date.today(), "Contact Entered in DB"]
                         
                         # capture errors from database or None
-                        inputerror = database.Database.new_obj_check(f_name,l_name,phone,email,startdate)
-                        
+                        try:
+                            inputerror = database.Database.new_obj_check(f_name,l_name,phone,email,startdate)
+                        except ValueError as e:
+                            inputerror = e
+
                         # if there are no errors, exit loop
                         if inputerror == None:
                             inputting = False

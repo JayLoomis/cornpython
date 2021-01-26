@@ -7,7 +7,7 @@ class Database:
     @staticmethod
     def new_obj_check(f_name,l_name,phone,email,startdate):
         try:
-            test = clients.Client(f_name,l_name,phone,email,startdate)
+            new_obj = clients.Client(f_name,l_name,phone,email,startdate)
         except ValueError as e:
             inputerror = e
 

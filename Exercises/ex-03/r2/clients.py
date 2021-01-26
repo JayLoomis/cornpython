@@ -6,14 +6,6 @@ class Client:
     verifyphone, verifyemail, verify date confirm the information input from the user is ready for storing in Database
     """
 
-    def __init__(self, f_name,l_name,phone,email,connection):
-        self.f_name = f_name.capitalize()
-        self.l_name = l_name.capitalize()
-        self.phone = set_phone(phone)
-        self.email = set_email(email)
-        self.connection = connection
-        self.key = uuid.uuid1()
-
     @staticmethod
     def getFields (self):
         fields_description = {f_name: "First Name", l_name : "Last Name", phone : "Phone number" , email : "Email address" , connection : "This field is a Collection of datetime objects tied to a Notes field."}
@@ -58,8 +50,7 @@ class Client:
         # returns e as a str
         return e
 
-    @staticmethod
-    def verifydate(d,m,y):   
+    def verifydate(self, d,m,y):   
         #swap year and day into digits
         d = int(d)
         m = int(m)
@@ -74,3 +65,11 @@ class Client:
             raise ValueError("Connections must be this year or earlier.")
 
         return outdate
+
+    def __init__(self, f_name,l_name,phone,email,connection):
+        self.f_name = f_name.capitalize()
+        self.l_name = l_name.capitalize()
+        self.phone = set_phone(phone)
+        self.email = set_email(email)
+        self.connection = connection
+        self.key = uuid.uuid1()
