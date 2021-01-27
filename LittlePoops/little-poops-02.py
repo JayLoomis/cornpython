@@ -36,8 +36,8 @@ import sys
 class Anagrammer:
 
     def __init__(self, dict_file):
-        self._dict_file = open(dict_file)
-        self.dictionary = self._dict_file.readlines()
+        self.dict_file = open(dict_file)
+        self.dictionary = self.dict_file.readlines()
         
 
     @staticmethod
@@ -54,25 +54,23 @@ class Anagrammer:
         else:
             return False
 
-    # def find_anagram(self, word):
-    #     self.word
+    def find_anagram(self, word):
 
-    #     for entry in self._dictionary:
+        for entry in self.dictionary:
 
 
     def list_anagrams(self, word):
-        self.word
-        self._results = []
-        for entry in self._dictionary:
+        results = []
+        for entry in self.dictionary:
             # check = entry.rstrip()
-            if is_anagram(entry, self.word):
-                _results.append(entry)
+            if is_anagram(entry, word):
+                results.append(entry)
             else:
                 continue
-        if self._results == []:
-            return self.word
+        if results == []:
+            return word
         else:
-            return self._results
+            return results
 
 
 class Interface:
