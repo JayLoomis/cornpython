@@ -37,55 +37,69 @@ class Anagrammer:
 
     def __init__(self, dict_file):
         self.dict_file = open(dict_file)
-        self.dictionary = self.dict_file.readlines()
+        self.dictionary = self.dict_file.read().splitlines()
+        # print(self.dictionary[0])
         
 
     @staticmethod
     def is_anagram(word,anagram):
-        word = lower(word)
+        word = word.lower()
         wordsorted = sorted(word)
         wordsorted = "".join(wordsorted)
-        anagram = lower(anagram)
+        anagram = anagram.lower()
         anagramsorted = sorted(anagram)
         anagramsorted = "".join(anagramsorted)
 
         if wordsorted == anagramsorted:
             return True
-        else:
+        elif wordsorted != anagramsorted:
             return False
 
     def find_anagram(self, word):
-
-        for entry in self.dictionary:
-
+        result = ""
+        shuf_dict = random.sample(self.dictionary, len(self.dictionary))
+        # print(self.dictionary[0:5])
+        # print(len(shuf_dict))
+        # print(shuf_dict[0:5])
+        for entry in shuf_dict:
+            if Anagrammer.is_anagram(word, entry) == True:
+                result = entry
+                return result
+            else:
+                answer = "There are no anagrams of {}".format(word)
+                return answer
 
     def list_anagrams(self, word):
         results = []
         for entry in self.dictionary:
             # check = entry.rstrip()
-            if is_anagram(entry, word):
+            if Anagrammer.is_anagram(word, entry) == True:
                 results.append(entry)
-            else:
-                continue
         if results == []:
-            return word
+            answer = "There are no anagrams of {}".format(word)
+            return answer
         else:
             return results
 
 
 class Interface:
 
-    #def __init__(self):
-        #self.dict_file = dictionary.txt
-
     def start(self):
+        # pick the source dictionary
         self.source_dict = "dictionary.txt"
+        # intantiate Anagrammer
         anagrams = Anagrammer(self.source_dict)
 
         print("enter a word:\n")
         word = input()
-        anagrams.list_anagrams(word)
-
+        print("1 or *?")
+        m = input()
+        if m == "1":
+            answer = anagrams.find_anagram(word)
+            print(answer)
+        elif m == "*":
+            answer = anagrams.list_anagrams(word)
+            print(answer)
 
 
 
