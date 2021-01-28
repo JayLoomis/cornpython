@@ -37,6 +37,7 @@ class Anagrammer:
 
     def __init__(self, dict_file):
         self.dict_file = open(dict_file)
+        # self.dictionary = self.dict_file.readlines() # readlines() includes /n at the end of each line
         self.dictionary = self.dict_file.read().splitlines()
         # print(self.dictionary[0])
         
@@ -56,18 +57,15 @@ class Anagrammer:
             return False
 
     def find_anagram(self, word):
-        result = ""
-        shuf_dict = random.sample(self.dictionary, len(self.dictionary))
+        random.shuffle(self.dictionary)
         # print(self.dictionary[0:5])
         # print(len(shuf_dict))
         # print(shuf_dict[0:5])
-        for entry in shuf_dict:
+        for entry in self.dictionary: # shuf_dict:
             if Anagrammer.is_anagram(word, entry) == True:
-                result = entry
-                return result
-            else:
-                answer = "There are no anagrams of {}".format(word)
-                return answer
+                return entry
+        # if we don't find a match, return the original word.
+        return word
 
     def list_anagrams(self, word):
         results = []
@@ -76,8 +74,7 @@ class Anagrammer:
             if Anagrammer.is_anagram(word, entry) == True:
                 results.append(entry)
         if results == []:
-            answer = "There are no anagrams of {}".format(word)
-            return answer
+            return word
         else:
             return results
 
