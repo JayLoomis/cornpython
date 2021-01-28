@@ -3,33 +3,38 @@
 
 # Hint: you might want to use recursion for this, which we haven't talked about yet. Exciting!
 
+# 3, 9, 27, 81...
+
 def threepower(x,p):
-    p = int(p)
-    if x ** 3 == p:
-        return True
-    elif x >= p:
+    if p < 3:
         return False
-    elif x ** 3 < p:
+    elif p == (3 ** x):
+        return True
+    elif p > (3 ** x):
         x += 1
         return threepower(x,p)
-
+    elif p < (3 ** x):
+        return False
 
 def main():
-    trying = True
-    while trying:
-        p = input("Gimme a number:\n")
-        if p.isdigit():
-            if threepower(1,p) == True:
-                print(f"{p} is a power of 3.")
+    playing = True
+    while playing:
+        power = input("Gimme a number:\n")
+        digits = True
+        if power.isdigit():
+            power = int(power)
+            if threepower(2,power) == True:
+                print(f"{power} is a power of 3.")
                 continue
             else:
-                print("Nope.  Try again?")
+                print(f"{power} is not a power of 3.")
                 continue
-        elif p == "Done" or "done":
-            trying = False
-        elif p.isdigit() == False:
-            print("I said a number.\nTry Again:\n")
-            continue
-
+        elif power.isdigit() == False:
+            print("You must provide a number.")
+            print("Or type DONE to exit.")
+            if power.upper() == 'DONE':
+                playing = False
+            else:
+                continue
 
 if __name__ == "__main__" : main()
