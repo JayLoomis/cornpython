@@ -12,6 +12,8 @@ Python. For example, this is a module-level docstring. I've added full
 docstrings to everything in the module to model how you should use them.
 """
 import random as rnd
+import curses
+
 
 class Flower:
     """ Represents a single flower in the game.
@@ -158,6 +160,28 @@ class FlowerGame:
             self.flowers.append(Flower(i))
             self.flowers[i].subscribe(self.bloom_callback)
 
+    def init_ui(self):
+        """ Sets up the game screen.
+
+        Initializes curses and configures the terminal settings to where they
+        need to be. Also logs information about the terminal screen for use in
+        other parts of the application.
+        """
+        stdscr = curses.initscr()
+        curses.noecho()
+        curses.cbreak()
+        stdscr.keypad(True)
+
+
+    def shut_down_ui(self):
+        """ Resets the terminal state.
+
+        Undoes all of the settings changes we made to the terminal on startup.
+        """
+        stdscr.keypad(False)
+        curses.nocbreak()
+        curses.echo()
+        curses.endwin()
 
     def bloom_callback(self, name, size, color):
         print(f"A {size} {color} bloom appears on {name}!")
@@ -165,6 +189,10 @@ class FlowerGame:
             if self.flowers[i].name == name:
                 del self.flowers[i]
                 break
+
+    def draw_interface():
+        pass
+
     
     def start(self):
         """ Runs the main game loop.
