@@ -71,15 +71,22 @@ def verifydate(d,m,y):
         raise ValueError("The date you entered is invalid.")
 
     if outdate.year > datetime.date.today().year:
-        raise ValueError("Connections must be this year or earlier")
+        raise ValueError("Connections must be this year or earlier.")
 
     return outdate
 
 def main():
     # working with a Sample Record:
-    test_record = dict(f_name="Jane", l_name="Doe", 
-        phone="(206) 346-1724", email="Jane@Doemail.com", 
-        contactdate={datetime.date.today(), ""})
+    # test_record = dict(f_name="Jane", l_name="Doe", 
+        # phone="(206) 346-1724", email="Jane@Doemail.com", 
+        # contactdate={datetime.date.today():""})
+
+    # working with a Sample Record (not using the dict() constructor)
+    test_record = {"f_name" : "Jane",
+                   "l_name" : "Doe",
+                   "phone" : "(206) 346-1724",
+                   "email" : "Jane@Doemail.com",
+                   "contactdate" : {datetime.date.today().strftime("%Y%m%d"):""}}
 
     # defining options for this program
     # SEARCH is for looking up a contact - not complete in this module
@@ -157,7 +164,11 @@ def main():
                 startdate = {datetime.date.today(), "Contact Entered in DB"}
 
                 # sample fake record!
-                a_record = dict(f_name=f_name, l_name=l_name, phone=phone, email=email, startdate=startdate)
+                a_record = {"f_name" : f_name,
+                            "l_name" : l_name,
+                            "phone" : phone,
+                            "email" : email,
+                            "startdate" : startdate}
                 
                 #print a verification of the Dictionary values:
                 print("\nYour new employee data is:")
@@ -179,7 +190,7 @@ def main():
                 inputtoday = input()
                 inputtoday = inputtoday.upper()
                 if inputtoday == "Y":
-                    inputconnection = datetime.date.today()
+                    newcontactdate = datetime.date.today()
                 else:
                     datechecked = False
                     while datechecked == False:
@@ -189,9 +200,10 @@ def main():
                         #verifydate returns accurate date or specific error problems
                         feedbackerror = None
                         try:
-                            inputconnection = verifydate(d,m,y)
+                            newcontactdate = verifydate(d,m,y)
                         except ValueError as e:
                             feedbackerror = e
+                            # newcontactdate = newcontactdate.strftime()
 
                         # if there are no errors, exit loop
                         if feedbackerror == None:
@@ -201,9 +213,9 @@ def main():
                             feedbackerror = None
                             continue
                 # ask them for any notes about the connection
-                contactnote = input("\nAdd any notes about your contact\n")
+                newcontactnote = input("\nAdd any notes about your contact\n")
                 # show it to them so they can verify it
-                print(f"\nYou're entering:\n--> {contactnote}\nas happening on:  {inputconnection}")
+                print(f"\nYou're entering:\n--> {newcontactnote}\nas happening on:  {newcontactdate}")
                 # loop for option to re-input data
                 checkaccurate = input("\nIs this accurate? Y/N\n")
                 checkaccurate = checkaccurate.upper()
@@ -211,7 +223,7 @@ def main():
                     verified = True
                 
                 # append the new connection to test_record
-                test_record["contactdate"][inputconnection]=contactnote
+                test_record["contactdate"][newcontactdate]=newcontactnote
                 print(test_record)
 
         elif manage == "EXIT":
