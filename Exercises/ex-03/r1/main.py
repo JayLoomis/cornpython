@@ -84,7 +84,7 @@ def main():
     # defining options for this program
     # SEARCH is for looking up a contact - not complete in this module
     # NEW is for adding a new contact
-    options = ("SEARCH", "NEW", "CONNECTION", "EXIT")
+    options = ("SEARCH", "NEW", "CONNECTION", "EXIT", "CX")
     
     #setting up some errors
     phoneerror = None
@@ -211,7 +211,7 @@ def main():
                     verified = True
                 
                 # append the new connection to test_record
-                test_record.contactdate.update(dict(inputconnection=contactnote))
+                test_record["contactdate"][inputconnection]=contactnote
                 print(test_record)
 
         elif manage == "EXIT":
