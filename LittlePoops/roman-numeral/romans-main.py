@@ -1,32 +1,39 @@
-import sys
 import romans
 
-def verify_opt(opt):
+def verify_num(opt):
     if opt.isnumeric() == True:
-        # print("*") # print test
         return True
-    #elif RomanNumerals.verify_roman(opt) == True:
-    #    return True
     else:
         return False
 
 
 def main():
-    print("\n\n***Roman/Arabic alternator***")
-    valid_opt = False
-    while valid_opt == False:
+    print("\n\n***Roman/Arabic translator***")
+    translating = True
+    romantique = romans.RomanNumerals()
+    while translating == True:
         print("\nEnter an Arabic or Roman neumeral:")
         print("(or type Q to quit)\n")
-        opt = input()
-        if opt == "Q":
-            sys.exit("\n\nThank you.")
+        num = input()
+        num = num.upper()
+        if num == "Q":
+            print("\n\nThank you.")
+            translating = False
 
-        elif verify_opt(opt) == False:
-            print("\n'{}' not recognized.".format(opt))
+        elif num.isnumeric():
+            if int(num) > 9999:
+                print("Too large for Roman calculations")
+                continue
+            else:
+                conversion = romantique.arabic_to_roman(num)
+                print(conversion)
+                continue
+
+        elif romantique.verify_roman(num):
+            conversion = romantique.roman_to_arabic(num)
+            print(conversion)
             continue
 
-        elif verify_opt(opt) == True:
-            # suite
-            valid_opt = True
+
 
 if __name__ == "__main__" : main()
