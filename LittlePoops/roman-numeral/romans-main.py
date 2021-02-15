@@ -10,6 +10,7 @@ def verify_num(opt):
 def main():
     print("\n\n***Roman/Arabic translator***")
     translating = True
+    inputerror = None
     romantique = romans.RomanNumerals()
     while translating == True:
         print("\nEnter an Arabic or Roman neumeral:")
@@ -29,10 +30,19 @@ def main():
                 print(conversion)
                 continue
 
-        elif romantique.verify_roman(num):
-            conversion = romantique.roman_to_arabic(num)
-            print(conversion)
-            continue
+        else:
+            try:
+                romantique.verify_roman(num)
+            except ValueError as e:
+                inputerror = e
+            if inputerror == None:
+                conversion = romantique.roman_to_arabic(num)
+                print(f"The Arabic Conversion is:  ", conversion)
+                continue
+            else:
+                print(inputerror)
+                continue
+
 
 
 
