@@ -4,47 +4,47 @@ class RomanNumerals:
         pass
 
     def roman_to_arabic(self, roman):
-        if len(romnum) == 0:
+        if len(roman) == 0:
             return 0
-        elif romnum.endswith("I",-1):
-            romnum = romnum[:-1]
-            return converter(romnum)+1
-        elif romnum.endswith("IV",-2):
-            romnum = romnum[:-2]
-            return converter(romnum)+4
-        elif romnum.endswith("V",-1):
-            romnum = romnum[:-1]
-            return converter(romnum)+5
-        elif romnum.endswith("IX",-2):
-            romnum = romnum[:-2]
-            return converter(romnum)+9
-        elif romnum.endswith("X",-1):
-            romnum = romnum[:-1]
-            return converter(romnum)+10
-        elif romnum.endswith("XL",-2):
-            romnum = romnum[:-2]
-            return converter(romnum)+40
-        elif romnum.endswith("L",-1):
-            romnum = romnum[:-1]
-            return converter(romnum)+50
-        elif romnum.endswith("XC",-2):
-            romnum = romnum[:-2]
-            return converter(romnum)+90
-        elif romnum.endswith("C",-1):
-            romnum = romnum[:-1]
-            return converter(romnum)+100
-        elif romnum.endswith("CD",-2):
-            romnum = romnum[:-2]
-            return converter(romnum)+400
-        elif romnum.endswith("D",-1):
-            romnum = romnum[:-1]
-            return converter(romnum)+500
-        elif romnum.endswith("CM",-2):
-            romnum = romnum[:-2]
-            return converter(romnum)+900
-        elif romnum.endswith("M",-1):
-            romnum = romnum[:-1]
-            return converter(romnum)+1000
+        elif roman.endswith("I",-1):
+            roman = roman[:-1]
+            return self.roman_to_arabic(roman)+1
+        elif roman.endswith("IV",-2):
+            roman = roman[:-2]
+            return self.roman_to_arabic(roman)+4
+        elif roman.endswith("V",-1):
+            roman = roman[:-1]
+            return self.roman_to_arabic(roman)+5
+        elif roman.endswith("IX",-2):
+            roman = roman[:-2]
+            return self.roman_to_arabic(roman)+9
+        elif roman.endswith("X",-1):
+            roman = roman[:-1]
+            return self.roman_to_arabic(roman)+10
+        elif roman.endswith("XL",-2):
+            roman = roman[:-2]
+            return self.roman_to_arabic(roman)+40
+        elif roman.endswith("L",-1):
+            roman = roman[:-1]
+            return self.roman_to_arabic(roman)+50
+        elif roman.endswith("XC",-2):
+            roman = roman[:-2]
+            return self.roman_to_arabic(roman)+90
+        elif roman.endswith("C",-1):
+            roman = roman[:-1]
+            return self.roman_to_arabic(roman)+100
+        elif roman.endswith("CD",-2):
+            roman = roman[:-2]
+            return self.roman_to_arabic(roman)+400
+        elif roman.endswith("D",-1):
+            roman = roman[:-1]
+            return self.roman_to_arabic(roman)+500
+        elif roman.endswith("CM",-2):
+            roman = roman[:-2]
+            return self.roman_to_arabic(roman)+900
+        elif roman.endswith("M",-1):
+            roman = roman[:-1]
+            return self.roman_to_arabic(roman)+1000
 
     def verify_roman(self, roman):
         # turn the string we recieve into a list
