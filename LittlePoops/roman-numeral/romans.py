@@ -1,7 +1,111 @@
 class RomanNumerals:
     
+    # https://www.w3resource.com/python-exercises/class-exercises/python-class-exercise-2.php
+
     def arabic_to_roman(self, arabic):
-        pass
+        roman = []
+        if len(arabic) > 4:
+            raise ValueError("Numeral too large")
+        if len(arabic) == 4:
+            for m in range(int(arabic[0])):
+                roman.append("M")
+            arabic = arabic[1:]
+
+        if len(arabic) == 3:
+            if arabic[0] == "1":
+                roman.append("C")
+                arabic = arabic[1:]
+            elif arabic[0] == "2":
+                roman.append("CC")
+                arabic = arabic[1:]
+            elif arabic[0] == "3":
+                roman.append("CCC")
+                arabic = arabic[1:]
+            elif arabic[0] == "4":
+                roman.append("CD")
+                arabic = arabic[1:]
+            elif arabic[0] == "5":
+                roman.append("D")
+                arabic = arabic[1:]
+            elif arabic[0] == "6":
+                roman.append("DC")
+                arabic = arabic[1:]
+            elif arabic[0] == "7":
+                roman.append("DCC")
+                arabic = arabic[1:]
+            elif arabic[0] == "8":
+                roman.append("DCCC")
+                arabic = arabic[1:]
+            elif arabic[0] == "9":
+                roman.append("CM")
+                arabic = arabic[1:]
+            elif arabic[0] == "0":
+                arabic = arabic[1:]
+        
+        if len(arabic) == 2:
+            if arabic[0] == "1":
+                roman.append("X")
+                arabic = arabic[1:]
+            elif arabic[0] == "2":
+                roman.append("XX")
+                arabic = arabic[1:]
+            elif arabic[0] == "3":
+                roman.append("XXX")
+                arabic = arabic[1:]
+            elif arabic[0] == "4":
+                roman.append("XL")
+                arabic = arabic[1:]
+            elif arabic[0] == "5":
+                roman.append("L")
+                arabic = arabic[1:]
+            elif arabic[0] == "6":
+                roman.append("LX")
+                arabic = arabic[1:]
+            elif arabic[0] == "7":
+                roman.append("LXX")
+                arabic = arabic[1:]
+            elif arabic[0] == "8":
+                roman.append("LXXX")
+                arabic = arabic[1:]
+            elif arabic[0] == "9":
+                roman.append("XC")
+                arabic = arabic[1:]
+            elif arabic[0] == "0":
+                arabic = arabic[1:]
+
+        if len(arabic) == 1:
+            if arabic[0] == "1":
+                roman.append("I")
+                arabic = ""
+            elif arabic[0] == "2":
+                roman.append("II")
+                arabic = ""
+            elif arabic[0] == "3":
+                roman.append("III")
+                arabic = ""
+            elif arabic[0] == "4":
+                roman.append("IV")
+                arabic = ""
+            elif arabic[0] == "5":
+                roman.append("V")
+                arabic = ""
+            elif arabic[0] == "6":
+                roman.append("VI")
+                arabic = ""
+            elif arabic[0] == "7":
+                roman.append("VI")
+                arabic = ""
+            elif arabic[0] == "8":
+                roman.append("VIII")
+                arabic = ""
+            elif arabic[0] == "9":
+                roman.append("IX")
+                arabic = ""
+            elif arabic[0] == "0":
+                arabic = ""
+            
+            roman = "".join(roman)
+            return roman
 
     def roman_to_arabic(self, roman):
         if len(roman) == 0:
