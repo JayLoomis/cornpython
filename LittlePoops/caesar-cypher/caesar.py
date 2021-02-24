@@ -13,7 +13,7 @@ def main():
     parser = argparse.ArgumentParser(description="Caeser Cypher Encryptor and Decryptor")
     parser.add_argument("filename", help="Select your file by name")
     parser.add_argument("mode", choices=['d', 'e'], type=str)
-    parser.add_argument("-k", "--keynum", type=int, default=13, help="Key provides a number by which the translation shifts the unicode representation of each character")
+    parser.add_argument("-k", "--keynum", type=int, default=1, help="Key provides a number by which the translation shifts the unicode representation of each character")
     parser.add_argument("-r", "--report", action="store_true")
     # group = parser.add_mutually_exclusive_group()
     # group.add_argument("-D", "--Decrypt", help="Choose D or Decrypt to decipher a text")
@@ -37,11 +37,20 @@ def encrypt(filename, keynum):
     datestamp = datetime.datetime.now()
     datestamp = datestamp.strftime("%Y%m%d%I%M%S")
     #open user file and start a new file with datestamp
-    with open(filename, 'r') as infile, open(filename + "-enc-" + datestamp, 'a') as outfile:
+    with open(filename, 'r') as infile, open(filename[:-4] + "-enc-" + datestamp + ".txt", 'a') as outfile:
         #read content from first file
         for line in infile:
-            #append to new file
-            outfile.append(line)
+            for char in line:
+                if ord(char) == 32:
+                    outfile.write(" ")
+                elif ord(char) == 10:
+                    outfile.write("\n")
+                elif ord(char) in range(65,123):
+                    outfile.write(chr(ord(char)+keynum))
+                # if ord(char) in range(65,89):
+                #     outfile.write(chr(ord(char)+keynum))
+                # if ord(char) in range(90,91):
+                #     outfile.write(chr(64+keynum))
 
 def decrypt(filename, keynum):
     decryptor = open(filename, "w")
